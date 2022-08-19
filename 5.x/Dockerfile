@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
-FROM eclipse-temurin:8-alpine
+FROM gradle:7.2-jdk11-alpine
 LABEL com.micrograils.docker.authors="aaron@micrograils.com"
+
+USER root
 
 ARG GRAILS_VERSION=5.2.2
 ENV GRAILS_VERSION ${GRAILS_VERSION}
@@ -17,5 +19,9 @@ ENV PATH $GRAILS_HOME/bin:$PATH
 RUN mkdir /app
 WORKDIR /app
 
-ENTRYPOINT ["grails"]
-CMD ["-version"]
+VOLUME ["/root/.gradle", "/root/.m2", "/app"]
+EXPOSE 8080
+
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["/bin/sh"]
