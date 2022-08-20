@@ -49,7 +49,9 @@ The full version format is：`:latest` or  `:${GRAILS_VERSION}-${JDK_VERSION}-${
 
 `latest`
 
-`5`, `5.2`, `5.2.2`, `5.2.2-jdk11`, `5.2.2-jdk11-alpine`
+- `5`, `5.2`, `5.2.2` 
+  - `5.2.2-jdk11`, `5.2.2-jdk11-alpine`
+  - `5.2.2-jdk8`, `5.2.2-jdk8-alpine`
 
 | Tagname                 | major        | minor               | patch                      | jdk           | base           |
 | :---------------------- | ------------ | ------------------- | -------------------------- | ------------- | -------------- |
@@ -59,25 +61,9 @@ The full version format is：`:latest` or  `:${GRAILS_VERSION}-${JDK_VERSION}-${
 | **:5.2.2**              | **5**        | **2**               | **2**                      | *DEFAULT_JDK* | *DEFAULT_BASE* |
 | **:5.2.2-jdk11**        | **5**        | **2**               | **2**                      | **jdk11**     | *DEFAULT_BASE* |
 | **:5.2.2-jdk11-alpine** | **5**        | **5**               | **5**                      | **jdk11**     | **alpine**     |
-| **:5-jdk11**            | **5**        | *max(5, minor)*     | *max(5, minor, patch)*     | **jdk11**     | *DEFAULT_BASE* |
-| **:5-jdk11-alpine**     | **5**        | *max(5, minor)*     | *max(5, minor, patch)*     | **jdk11**     | **alpine**     |
-
-|      |      |        |              |                     |
-| ---- | ---- | ------ | ------------ | ------------------- |
-| :5   | :5.2 | :5.2.2 | :5.2.2-jdk11 | :5.2.2-jdk11-alpine |
-|      |      |        |              | :5.2.2-jdk11-       |
-|      |      |        |              |                     |
+| ……                      | ……           | ……                  | ……                         | ……            | ……             |
 
 
-
-- `5`
-  - `5.2`
-    - `5.2.2`
-      - 
-    - `5.2.1`
-    - `5.2.0`
-  - `5.1`
-  - `5.0`
 
 To view all tags, please visit: https://github.com/micrograils/grails-docker
 

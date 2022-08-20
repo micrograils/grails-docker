@@ -1,3 +1,5 @@
 #!/bin/sh
 
-# TODO
+set -euo pipefail
+
+// TODO
