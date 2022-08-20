@@ -2,8 +2,11 @@
 
 version=7.2-jdk8-alpine
 
-mkdir build && copy Dockerfile build/ && cd build
+mkdir build
+cp Dockerfile build/
+cd build
 
 sudo docker build -t micrograils/gradle:$version .
 
+cd ..
 rm -rf build/
