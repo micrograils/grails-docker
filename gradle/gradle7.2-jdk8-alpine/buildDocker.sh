@@ -8,5 +8,5 @@ cd build
 
 sudo docker build -t micrograils/gradle:$version .
 
-cd ..
+cd .. || exit
 rm -rf build/
