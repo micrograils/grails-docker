@@ -2,7 +2,9 @@
 
 To quickly use the Grails framework.
 
-
+> **All images were built under `centos 7`, base on `gradle` `eclipse-temurin`  images.**
+>
+> more info see: https://github.com/micrograils/grails-docker
 
 ## Quick start
 
@@ -47,25 +49,11 @@ a few seconds later, you can access your app at the URL `http://localhost:8080`.
 
 The full version format is：`:latest` or  `:${GRAILS_VERSION}-${JDK_VERSION}-${BASE_NAME}`.
 
-`latest`
+`latest` --> `5.2.2-jdk11-alpine`
 
-- `5`, `5.2`, `5.2.2` 
-  - `5.2.2-jdk11`, `5.2.2-jdk11-alpine`
-  - `5.2.2-jdk8`, `5.2.2-jdk8-alpine`
+for grails 5:
 
-| Tagname                 | major        | minor               | patch                      | jdk           | base           |
-| :---------------------- | ------------ | ------------------- | -------------------------- | ------------- | -------------- |
-| **:latest**             | *max(major)* | *max(major, minor)* | *max(major, minor, patch)* | *DEFAULT_JDK* | *DEFAULT_BASE* |
-| **:5**                  | **5**        | *max(5, minor)*     | *max(5, minor, patch)*     | *DEFAULT_JDK* | *DEFAULT_BASE* |
-| **:5.2**                | **5**        | **2**               | *max(major, 2, patch)*     | *DEFAULT_JDK* | *DEFAULT_BASE* |
-| **:5.2.2**              | **5**        | **2**               | **2**                      | *DEFAULT_JDK* | *DEFAULT_BASE* |
-| **:5.2.2-jdk11**        | **5**        | **2**               | **2**                      | **jdk11**     | *DEFAULT_BASE* |
-| **:5.2.2-jdk11-alpine** | **5**        | **5**               | **5**                      | **jdk11**     | **alpine**     |
-| ……                      | ……           | ……                  | ……                         | ……            | ……             |
-
-
-
-To view all tags, please visit: https://github.com/micrograils/grails-docker
+`5.*.*-jdk11-alpine` and `5.*.*-jdk8-alpine`
 
 ## About Grails Framework
 
