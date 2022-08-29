@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -euo pipefail
 
@@ -14,7 +14,7 @@ sudo rm -rf $docker_build_home && sudo mkdir $docker_build_home
 sudo cp ../grails/"${grails_major_version}"/jdk"${jdk_version}".Dockerfile ${docker_build_home}/Dockerfile
 cd ${docker_build_home}
 
-sudo build -t micrograils/grails:"${grails_version}" .
+sudo build -t micrograils/grails:${grails_version}" .
 sudo docker tag micrograils/grails:"${grails_version}" grails/grails:"${grails_version}"
 if [ "$update_latest" -eq 1 ]; then
   # tag for micrograils/grails
