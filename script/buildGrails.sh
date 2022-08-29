@@ -11,7 +11,7 @@ grails_minor_version=${grails_version:0:3}
 docker_build_home=/tmp/grails-docker
 
 sudo rm -rf $docker_build_home && sudo mkdir $docker_build_home
-sudo cp ../grails/"${grails_major_version}"/"jdk${jdk_version}.Dockerfile" ${docker_build_home}/Dockerfile
+sudo cp ../grails/"${grails_major_version}"/jdk"${jdk_version}".Dockerfile ${docker_build_home}/Dockerfile
 cd ${docker_build_home}
 
 sudo build -t micrograils/grails:"${grails_version}" .
