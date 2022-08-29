@@ -1,22 +1,22 @@
 # Grails Docker
 
+![License](https://img.shields.io/badge/license-Apache%202.0-blue)
+
 To quickly use the Grails framework.
 
-> **All images were built under `centos 7`, base on `gradle` `eclipse-temurin`  images.**
->
 > more info see: https://github.com/micrograils/grails-docker
 
 ## Quick start
 
 ```shell
-sudo docker run --rm micrograils/grails -v
+sudo docker run --rm micrograils/grails grails -v
 ```
 
-with version `5.2.2`, it outputs:
+with version `5.2.3`, it outputs:
 
 ```shell
-| Grails Version: 5.2.2
-| JVM Version: 11.0.13
+| Grails Version: 5.2.3
+| JVM Version: 11.0.16.1
 ```
 
 Or, use `-it` to allocate a pseudo-TTY connected to the container’s stdin:
@@ -36,24 +36,45 @@ the first step is to confirm the grails version of your project, pull the corres
 for example:
 
 ```
-docker run -d -v /path_to_your_project:/app:rw -p 8080:8080 micrograils/grails:5.2.2 run-app
+docker run -d -v /path_to_your_project:/app:rw -p 8080:8080 micrograils/grails:5.2.3 grails run-app
 ```
 
 a few seconds later, you can access your app at the URL `http://localhost:8080`.
 
-> The commands `help`, `list-profiles`, `create-app`, `run-app`, `war`, will be executed as `grails ${command}`. (The same goes for `-v` above). Commands other than these will be attempted to be executed directly.
+**NOTE**
 
+The `Dockerfile` declares several `VOLUME`s :
 
+```dockerfile
+VOLUME ["/root/.gradle", "/root/.m2", "/app"]
+```
 
-## About Tagname
+If you already have `gradle` or `maven` related resources locally, it is strongly recommended that you map the relevant paths to the `container`. especially in some areas where the `gradle-bin` file cannot be downloaded smoothly :)
 
-The full version format is：`:latest` or  `:${GRAILS_VERSION}-${JDK_VERSION}-${BASE_NAME}`.
+Now, the complete command example is as follows (note the substitution of local paths):
 
-`latest` --> `5.2.2-jdk11-alpine`
+```shell
+docker run -d \
+    --name grailsapp \
+    -v /path_to_your_project:/app:rw \
+    -v ~/.gradle:/root/.gradle \
+    -v ~/.m2:/root/.m2 \
+    -p 8080:8080 \
+    micrograils/grails:5.2.3 \
+    grails run-app
+```
+
+## About Tag
+
+The full version format is：`:latest` , `:${GRAILS_MAJOR_VERSION}`, `:${GRAILS_MINOR_VERSION}`, `:${GRAILS_FULL_VERSION}`.
 
 for grails 5:
 
-`5.*.*-jdk11-alpine` and `5.*.*-jdk8-alpine`
+`:5`, `:5.2`, `:5.2.3`
+
+## About Base Image
+
+So far, all docker images are extended from alpine.
 
 ## About Grails Framework
 
