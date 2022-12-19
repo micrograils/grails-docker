@@ -2,7 +2,7 @@
 FROM eclipse-temurin:11-jdk-alpine
 LABEL com.micrograils.docker.authors="aaron@micrograils.com"
 
-ARG GRAILS_VERSION=5.2.3
+ARG GRAILS_VERSION=5.2.5
 ENV GRAILS_VERSION=${GRAILS_VERSION} GRAILS_HOME=/opt/grails PATH=/opt/grails/bin:$PATH
 
 WORKDIR /opt

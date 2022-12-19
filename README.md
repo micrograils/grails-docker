@@ -9,20 +9,20 @@ To quickly use the Grails framework.
 ## Quick start
 
 ```shell
-sudo docker run --rm micrograils/grails grails -v
+sudo docker run --rm grails/grails grails -v
 ```
 
-with version `5.2.3`, it outputs:
+with version `5.2.5`, it outputs:
 
 ```shell
-| Grails Version: 5.2.3
+| Grails Version: 5.2.5
 | JVM Version: 11.0.16.1
 ```
 
 Or, use `-it` to allocate a pseudo-TTY connected to the container’s stdin:
 
 ```shell
-sudo docker run --rm -it micrograils/grails
+sudo docker run --rm -it grails/grails
 ```
 
 > Note that when using `-it`, it is supported to pass in a generic grails command or leave it blank (default is `/bin/sh`)
@@ -36,7 +36,7 @@ the first step is to confirm the grails version of your project, pull the corres
 for example:
 
 ```
-docker run -d -v /path_to_your_project:/app:rw -p 8080:8080 micrograils/grails:5.2.3 grails run-app
+docker run -d -v /path_to_your_project:/app:rw -p 8080:8080 grails/grails:5.2.5 grails run-app
 ```
 
 a few seconds later, you can access your app at the URL `http://localhost:8080`.
@@ -60,7 +60,7 @@ docker run -d \
     -v ~/.gradle:/root/.gradle \
     -v ~/.m2:/root/.m2 \
     -p 8080:8080 \
-    micrograils/grails:5.2.3 \
+    grails/grails:5.2.5 \
     grails run-app
 ```
 
@@ -70,7 +70,7 @@ The full version format is：`:latest` , `:${GRAILS_MAJOR_VERSION}`, `:${GRAILS_
 
 for grails 5:
 
-`:5`, `:5.2`, `:5.2.3`
+`:5`, `:5.2`, `:5.2.5`
 
 ## About Base Image
 

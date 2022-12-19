@@ -4,7 +4,7 @@ LABEL com.micrograils.docker.authors="aaron@micrograils.com"
 
 USER root
 
-ARG GRAILS_VERSION=5.2.2
+ARG GRAILS_VERSION=5.2.5
 ENV GRAILS_VERSION ${GRAILS_VERSION}
 
 WORKDIR /opt/
