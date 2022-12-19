@@ -1,6 +1,6 @@
 # Grails Docker
 
-![License](https://img.shields.io/badge/license-Apache%202.0-blue) | ![License](https://img.shields.io/badge/grails-5.2.3-green)
+![License](https://img.shields.io/badge/license-Apache%202.0-blue) | ![License](https://img.shields.io/badge/grails-5.2.5-green)
 
 To quickly use the Grails framework.
 
