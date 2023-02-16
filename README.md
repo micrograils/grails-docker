@@ -1,6 +1,6 @@
 # Grails Docker
 
-![License](https://img.shields.io/badge/license-Apache%202.0-blue) | ![License](https://img.shields.io/badge/grails-5.2.3-green)
+![License](https://img.shields.io/badge/license-Apache%202.0-blue) | ![License](https://img.shields.io/badge/grails-5.3.2-green)
 
 To quickly use the Grails framework.
 
@@ -9,7 +9,7 @@ To quickly use the Grails framework.
 ## Quick start
 
 ```shell
-sudo docker run --rm micrograils/grails grails -v
+sudo docker run --rm grails/grails grails -v
 ```
 
 with version `5.2.3`, it outputs:
@@ -22,7 +22,7 @@ with version `5.2.3`, it outputs:
 Or, use `-it` to allocate a pseudo-TTY connected to the container’s stdin:
 
 ```shell
-sudo docker run --rm -it micrograils/grails
+sudo docker run --rm -it grails/grails
 ```
 
 > Note that when using `-it`, it is supported to pass in a generic grails command or leave it blank (default is `/bin/sh`)
@@ -60,7 +60,7 @@ docker run -d \
     -v ~/.gradle:/root/.gradle \
     -v ~/.m2:/root/.m2 \
     -p 8080:8080 \
-    micrograils/grails:5.2.3 \
+    grails/grails:5.2.3 \
     grails run-app
 ```
 
