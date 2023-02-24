@@ -13,10 +13,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # 安装依赖、JDK、MySQL
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl unzip \
+    apt-get install -y --no-install-recommends curl unzip git \
         openjdk-${JDK_VERSION}-jdk mysql-server-${MYSQL_VERSION} && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    usermod -d /var/lib/mysql/ mysql
 
 # 安装 Grails
 RUN curl -L -o grails-${GRAILS_VERSION}.zip https://github.com/grails/grails-core/releases/download/v${GRAILS_VERSION}/grails-${GRAILS_VERSION}.zip && \
@@ -37,6 +38,6 @@ RUN sed -i 's/^#\s*\(character_set_server\s*=\s*\).*$/\1utf8/' /etc/mysql/mysql.
 WORKDIR /app
 
 # Expose port 8080 for Grails app
-EXPOSE 8080
+EXPOSE 3306 8080
 
 CMD ["/bin/sh"]
