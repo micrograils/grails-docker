@@ -39,6 +39,4 @@ WORKDIR /app
 # Expose port 8080 for Grails app
 EXPOSE 8080
 
-# 将容器的 entrypoint 设置为启动 MySQL 的命令
-ENTRYPOINT ["/usr/sbin/mysqld", "--user=mysql", "--console"]
 CMD ["/bin/sh"]
