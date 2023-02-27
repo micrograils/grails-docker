@@ -1,7 +1,11 @@
 FROM grails/grails2-mysql
 
 # Set default values for variables
-ENV LOCAL_SSH_PORT=22 \
+ENV REMOTE_HOST \
+    REMOTE_USER \
+    REMOTE_SSH_PORT \
+    REMOTE_HTTP_PORT \
+    LOCAL_SSH_PORT=22 \
     LOCAL_HTTP_PORT=8080
 
 # Copy the start script to the container
