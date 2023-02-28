@@ -12,6 +12,9 @@ RUN apt-get update && \
 # 修改 sshd 配置文件，允许 root 用户登录
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
+# 开放 SSH 端口
+EXPOSE 22
+
 # 将启动脚本复制到容器中
 COPY entrypoint.sh /entrypoint.sh
 

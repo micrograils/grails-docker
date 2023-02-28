@@ -40,14 +40,14 @@ ENV GROOVY_HOME /opt/groovy
 ENV GRAILS_HOME /opt/grails
 ENV PATH $PATH:$JAVA_HOME/bin:$GRAILS_HOME/bin:$GROOVY_HOME/bin
 
-# Configure MySQL to use UTF8 encoding
+# 配置 MySQL 使用 UTF8 编码
 RUN sed -i 's/^#\s*\(character_set_server\s*=\s*\).*$/\1utf8/' /etc/mysql/mysql.conf.d/mysqld.cnf && \
     sed -i 's/^#\s*\(collation_server\s*=\s*\).*$/\1utf8_general_ci/' /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # 定义工作目录
 WORKDIR /app
 
-# Expose port 8080 for Grails app
+# 开放 MySQL、Grails 端口
 EXPOSE 3306 8080
 
 CMD ["/bin/sh"]

@@ -15,6 +15,9 @@ ENV LOCAL_SSH_PORT=22 \
   REMOTE_HOST=public.yourdomain.com \
   REMOTE_USER=CHANGE_ME
 
+# 开放 SSH 端口
+EXPOSE 22
+
 # Copy the start script to the container
 COPY start.sh /start.sh
 
