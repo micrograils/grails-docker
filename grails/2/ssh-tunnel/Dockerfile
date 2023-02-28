@@ -18,9 +18,9 @@ ENV LOCAL_SSH_PORT=22 \
 # 开放 SSH 端口
 EXPOSE 22
 
-# Copy the start script to the container
-COPY start.sh /start.sh
+# Copy the entrypoint script to the container
+COPY entrypoint.sh /entrypoint.sh
 
-# Set permissions and execute the start script
-RUN chmod +x /start.sh
-CMD ["/start.sh"]
+# Set permissions and execute the entrypoint script
+RUN chmod +x /entrypoint.sh
+CMD ["/entrypoint.sh"]
