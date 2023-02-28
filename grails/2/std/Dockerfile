@@ -3,10 +3,10 @@ FROM ubuntu:18.04
 LABEL maintainer="Aaron<aaron@micrograils.com>"
 
 # 设置参数
-ARG GRAILS_VERSION=2.5.6
 ARG JDK_VERSION=8
-ARG MYSQL_VERSION=5.7
 ARG GROOVY_VERSION=2.5.21
+ARG GRAILS_VERSION=2.5.6
+ARG MYSQL_VERSION=5.7
 
 # 设置时区
 ENV TZ=Asia/Shanghai
