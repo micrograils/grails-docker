@@ -6,6 +6,7 @@ LABEL maintainer="Aaron<aaron@micrograils.com>"
 ARG GRAILS_VERSION=2.5.6
 ARG JDK_VERSION=8
 ARG MYSQL_VERSION=5.7
+ARG GROOVY_VERSION=2.5.21
 
 # 设置时区
 ENV TZ=Asia/Shanghai
@@ -19,6 +20,14 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     usermod -d /var/lib/mysql/ mysql
 
+# 安装 Groovy
+ENV GROOVY_HOME /opt/groovy
+ENV PATH $PATH:$GROOVY_HOME/bin
+RUN curl -L -o groovy-${GROOVY_VERSION}.zip <https://dl.bintray.com/groovy/maven/apache-groovy-binary-${GROOVY_VERSION}.zip> && \\
+    unzip groovy-${GROOVY_VERSION}.zip && \\
+    mv groovy-${GROOVY_VERSION} /opt/groovy && \\
+    rm groovy-${GROOVY_VERSION}.zip
+
 # 安装 Grails
 RUN curl -L -o grails-${GRAILS_VERSION}.zip https://github.com/grails/grails-core/releases/download/v${GRAILS_VERSION}/grails-${GRAILS_VERSION}.zip && \
     unzip grails-${GRAILS_VERSION}.zip && \
@@ -27,8 +36,9 @@ RUN curl -L -o grails-${GRAILS_VERSION}.zip https://github.com/grails/grails-cor
 
 # 配置环境变量
 ENV JAVA_HOME /usr/lib/jvm/java-${JDK_VERSION}-openjdk-amd64
+ENV GROOVY_HOME /opt/groovy
 ENV GRAILS_HOME /opt/grails
-ENV PATH $PATH:$GRAILS_HOME/bin:$JAVA_HOME/bin
+ENV PATH $PATH:$JAVA_HOME/bin:$GRAILS_HOME/bin:$GROOVY_HOME/bin
 
 # Configure MySQL to use UTF8 encoding
 RUN sed -i 's/^#\s*\(character_set_server\s*=\s*\).*$/\1utf8/' /etc/mysql/mysql.conf.d/mysqld.cnf && \
