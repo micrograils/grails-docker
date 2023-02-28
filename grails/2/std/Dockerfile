@@ -21,9 +21,9 @@ RUN apt-get update && \
     usermod -d /var/lib/mysql/ mysql
 
 # 安装 Groovy
-RUN curl -L -o groovy-${GROOVY_VERSION}.zip <https://dl.bintray.com/groovy/maven/apache-groovy-binary-${GROOVY_VERSION}.zip> && \\
-    unzip groovy-${GROOVY_VERSION}.zip && \\
-    mv groovy-${GROOVY_VERSION} /opt/groovy && \\
+RUN curl -L -o groovy-${GROOVY_VERSION}.zip <https://dl.bintray.com/groovy/maven/apache-groovy-binary-${GROOVY_VERSION}.zip> && \
+    unzip groovy-${GROOVY_VERSION}.zip && \
+    mv groovy-${GROOVY_VERSION} /opt/groovy && \
     rm groovy-${GROOVY_VERSION}.zip
 
 # 安装 Grails
