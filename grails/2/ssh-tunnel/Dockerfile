@@ -1,17 +1,19 @@
 FROM grails/grails2-mysql
 
-# Set default values for variables
-ENV REMOTE_HOST=localhost \
-    REMOTE_USER=root \
-    REMOTE_SSH_PORT=10022 \
-    LOCAL_SSH_PORT=22 \
-    REMOTE_HTTP_PORT=18080 \
-    LOCAL_HTTP_PORT=8080
-
 RUN apt-get update && \
     apt-get install -y ssh && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# Set default values for variables
+ENV LOCAL_SSH_PORT=22 \
+  LOCAL_HTTP_PORT=8080 \
+  REMOTE_SSH_PORT=2222 \
+  REMOTE_HTTP_PORT=8888 \
+  REMOTE_HOST=public.yourdomain.com \
+  REMOTE_USER=CHANGE_ME
 
 # Copy the start script to the container
 COPY start.sh /start.sh
