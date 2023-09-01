@@ -1,26 +1,23 @@
 FROM grails/grails2-mysql
 
+# 更新安装包列表
 RUN apt-get update && \
+    # 安装 ssh
     apt-get install -y ssh && \
+    # 清理安装包缓存
     apt-get clean && \
+    # 删除已经安装的列表
     rm -rf /var/lib/apt/lists/*
 
+# 修改 sshd 配置文件，允许 root 用户登录
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-
-# Set default values for variables
-ENV LOCAL_SSH_PORT=22 \
-  LOCAL_HTTP_PORT=8080 \
-  REMOTE_SSH_PORT=2222 \
-  REMOTE_HTTP_PORT=8888 \
-  REMOTE_HOST=public.yourdomain.com \
-  REMOTE_USER=CHANGE_ME
 
 # 开放 SSH 端口
 EXPOSE 22
 
-# Copy the entrypoint script to the container
+# 将启动脚本复制到容器中
 COPY entrypoint.sh /entrypoint.sh
 
-# Set permissions and execute the entrypoint script
+# 设置启动脚本可执行权限并运行
 RUN chmod +x /entrypoint.sh
 CMD ["/entrypoint.sh"]
