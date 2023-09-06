@@ -10,11 +10,14 @@ RUN apk update && \
     apk add openssh && \
     rm -rf /var/cache/apk/*
 
-# 生成SSH主机密钥文件
-RUN ssh-keygen -A
+# 设置SSH root密码（这是一个示例，请更改为您自己的密码）
+RUN echo 'root:password' | chpasswd
 
 # 允许root用户登录
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# 创建一个用于挂载ssh证书的目录
+RUN mkdir -p /root/.ssh
 
 # 切换工作目录到/opt
 WORKDIR /opt
