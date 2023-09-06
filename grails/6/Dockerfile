@@ -13,14 +13,11 @@ RUN apk update && \
 # 生成SSH主机密钥文件
 RUN ssh-keygen -A
 
-# 设置SSH root密码（这是一个示例，请更改为您自己的密码）
-RUN echo 'root:password' | chpasswd
-
 # 允许root用户登录
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
-# 创建一个用于挂载ssh证书的目录
-RUN mkdir -p /root/.ssh
+# 设置SSH root密码（这是一个示例，请更改为您自己的密码）
+RUN echo 'root:password' | chpasswd
 
 # 切换工作目录到/opt
 WORKDIR /opt
@@ -52,5 +49,5 @@ VOLUME ["/root/.gradle", "/root/.m2", "/app", "/root/.ssh"]
 # 暴露端口（8080和22）
 EXPOSE 8080 22
 
-# 设置启动命令
-CMD ["/usr/sbin/sshd", "-D"]
+# 启动SSH服务
+CMD ["/usr/sbin/sshd", "-D", "-e"]
