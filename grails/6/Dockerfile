@@ -1,10 +1,17 @@
 # 设置基础镜像为特定版本的 eclipse-temurin:11-jdk-alpine
 FROM eclipse-temurin:11.0.20.1_1-jdk-alpine
 
+# 设置时区
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # 安装OpenSSH服务器
 RUN apk update && \
     apk add openssh && \
     rm -rf /var/cache/apk/*
+
+# 生成SSH主机密钥文件
+RUN ssh-keygen -A
 
 # 允许root用户登录
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
@@ -37,8 +44,7 @@ WORKDIR /app
 VOLUME ["/root/.gradle", "/root/.m2", "/app", "/root/.ssh"]
 
 # 暴露端口（8080和22）
-EXPOSE 8080
-EXPOSE 22
+EXPOSE 8080 22
 
 # 设置启动命令
 CMD ["/usr/sbin/sshd", "-D"]
