@@ -23,7 +23,7 @@ RUN echo 'root:password' | chpasswd
 WORKDIR /opt
 
 # 下载Gradle 7.2（仅下载，不解压）
-RUN wget https://services.gradle.org/distributions/gradle-7.2-bin.zip
+ADD https://services.gradle.org/distributions/gradle-7.2-bin.zip /opt
 
 # 定义Grails版本
 ARG GRAILS_VERSION=6.0.0
