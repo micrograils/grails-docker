@@ -1,17 +1,29 @@
+# 第一阶段：下载文件并保存到临时阶段
+FROM alpine as downloader
+WORKDIR /tmp
+RUN wget https://services.gradle.org/distributions/gradle-7.2-bin.zip
+
+# 第二阶段：从临时阶段复制文件到最终镜像
 # 设置基础镜像为特定版本的 eclipse-temurin:11-jdk-alpine
 FROM eclipse-temurin:11.0.20.1_1-jdk-alpine
+
+# 复制下载的文件到最终镜像
+COPY --from=downloader /tmp/gradle-7.2-bin.zip /opt
 
 # 设置时区
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# 安装OpenSSH服务器
-RUN apk update && \
-    apk add openssh && \
-    rm -rf /var/cache/apk/*
+# 添加常用别名到 /root/.ashrc
+RUN echo "alias l.='ls -d .* --color=auto'" >> /root/.ashrc && \
+    echo "alias ll='ls -l --color=auto'" >> /root/.ashrc && \
+    echo "alias la='ls -la --color=auto'" >> /root/.ashrc && \
+    echo "alias ls='ls --color=auto'" >> /root/.ashrc
 
-# 生成SSH主机密钥文件
-RUN ssh-keygen -A
+# 安装 netstat, wget, curl, openssh 并生成SSH密钥
+RUN apk update && \
+    apk add --no-cache net-tools wget curl openssh && \
+    ssh-keygen -A
 
 # 允许root用户登录
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
@@ -21,9 +33,6 @@ RUN echo 'root:password' | chpasswd
 
 # 切换工作目录到/opt
 WORKDIR /opt
-
-# 下载Gradle 7.2（仅下载，不解压）
-ADD https://services.gradle.org/distributions/gradle-7.2-bin.zip /opt
 
 # 定义Grails版本
 ARG GRAILS_VERSION=6.0.0
