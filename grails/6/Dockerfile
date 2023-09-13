@@ -1,53 +1,58 @@
-# 第一阶段：下载文件并保存到临时阶段
-FROM alpine as downloader
-WORKDIR /tmp
-RUN wget https://services.gradle.org/distributions/gradle-7.2-bin.zip
+# 第一阶段：下载 Gradle 文件并保存到临时阶段
+FROM alpine as gradle-downloader
 
-# 第二阶段：从临时阶段复制文件到最终镜像
+# 切换工作目录到/opt
+WORKDIR /opt
+
+# 定义 Gradle 版本
+ARG GRADLE_VERSION=7.2
+ADD https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip /opt
+
+# 第二阶段：下载 Grails 文件并保存到临时阶段
+FROM alpine as grails-downloader
+
+# 切换工作目录到/opt
+WORKDIR /opt
+
+# 定义 Grails 版本
+ARG GRAILS_VERSION=6.0.0
+ADD https://github.com/grails/grails-core/releases/download/v${GRAILS_VERSION}/grails-${GRAILS_VERSION}.zip /opt
+RUN unzip grails-${GRAILS_VERSION}.zip
+
+
+# 第三阶段：构建最终镜像
 # 设置基础镜像为特定版本的 eclipse-temurin:11-jdk-alpine
 FROM eclipse-temurin:11.0.20.1_1-jdk-alpine
 
+# 定义 Gradle 和 Grails 版本信息
+ARG GRADLE_VERSION=7.2
+ARG GRAILS_VERSION=6.0.0
+
 # 复制下载的文件到最终镜像
-COPY --from=downloader /tmp/gradle-7.2-bin.zip /opt
+COPY --from=gradle-downloader /opt/gradle-${GRADLE_VERSION}-bin.zip /opt
+COPY --from=grails-downloader /opt/grails-${GRAILS_VERSION} /opt
 
 # 设置时区
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# 添加常用别名到 /root/.ashrc
-RUN echo "alias l.='ls -d .* --color=auto'" >> /root/.ashrc && \
-    echo "alias ll='ls -l --color=auto'" >> /root/.ashrc && \
-    echo "alias la='ls -la --color=auto'" >> /root/.ashrc && \
-    echo "alias ls='ls --color=auto'" >> /root/.ashrc
+# 添加常用别名到 /root/.profile
+RUN echo "alias l.='ls -d .* --color=auto'" >> /root/.profile && \
+    echo "alias ll='ls -l --color=auto'" >> /root/.profile && \
+    echo "alias la='ls -la --color=auto'" >> /root/.profile && \
+    echo "alias ls='ls --color=auto'" >> /root/.profile
 
 # 安装 netstat, wget, curl, openssh 并生成SSH密钥
 RUN apk update && \
     apk add --no-cache net-tools wget curl openssh && \
-    ssh-keygen -A
-
-# 允许root用户登录
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-
-# 设置SSH root密码（这是一个示例，请更改为您自己的密码）
-RUN echo 'root:password' | chpasswd
-
-# 切换工作目录到/opt
-WORKDIR /opt
-
-# 定义Grails版本
-ARG GRAILS_VERSION=6.0.0
+    ssh-keygen -A && \
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    echo 'root:password' | chpasswd
 
 # 设置环境变量
 ENV GRAILS_VERSION=${GRAILS_VERSION} \
     GRAILS_HOME=/opt/grails \
     PATH=/opt/grails/bin:$PATH
-
-# 下载并安装Grails 6（这部分可以在未来更新Grails版本时重新运行）
-RUN wget https://github.com/grails/grails-core/releases/download/v${GRAILS_VERSION}/grails-${GRAILS_VERSION}.zip && \
-    unzip grails-$GRAILS_VERSION.zip && \
-    rm -rf grails-$GRAILS_VERSION.zip && \
-    ln -s grails-$GRAILS_VERSION grails && \
-    grails -version
 
 # 创建/app目录
 WORKDIR /app
